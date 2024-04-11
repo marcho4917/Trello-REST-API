@@ -1,0 +1,261 @@
+{
+	"info": {
+		"_postman_id": "e8522d08-1bf1-4704-9d83-3c8452a7e19e",
+		"name": "Trello",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32579369"
+	},
+	"item": [
+		{
+			"name": "[GET] Boards list",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Answer code veryfication - 200\", function() {\r",
+							"    pm.response.to.have.status(200);\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/members/user_to_tests/boards?key={{key}}&token={{token}}&baseURL={{baseURL}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"members",
+						"user_to_tests",
+						"boards"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{key}}"
+						},
+						{
+							"key": "token",
+							"value": "{{token}}"
+						},
+						{
+							"key": "baseURL",
+							"value": "{{baseURL}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[POST] Create new board",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let resBody;\r",
+							"\r",
+							"pm.test(\"Code veryfication - 200\", function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"    resBody = pm.response.json();\r",
+							"    pm.collectionVariables.set(\"boardID\", resBody.id)\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Title veryfication\", function(){\r",
+							"    pm.expect(resBody.name).eql(pm.collectionVariables.get(\"BoardTitle\"));\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/boards/?name={{BoardTitle}}&key={{key}}&token={{token}}&baseURL={{baseURL}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"boards",
+						""
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "{{BoardTitle}}"
+						},
+						{
+							"key": "key",
+							"value": "{{key}}"
+						},
+						{
+							"key": "token",
+							"value": "{{token}}"
+						},
+						{
+							"key": "baseURL",
+							"value": "{{baseURL}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[PUT] Update board name",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let resBody;\r",
+							"\r",
+							"pm.test(\"Answer veryfication code\", function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"    resBody = pm.response.json();\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Title update veryfication\", function(){\r",
+							"    pm.expect(resBody.name).eql(pm.collectionVariables.get(\"boardUpdateTitle\"))\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Description update veryfication\", function(){\r",
+							"    pm.expect(resBody.desc).eql(pm.collectionVariables.get(\"boardUpdateDesc\"))\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/boards/{{boardID}}?key={{key}}&token={{token}}&name={{boardUpdateTitle}}&desc={{boardUpdateDesc}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"boards",
+						"{{boardID}}"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{key}}"
+						},
+						{
+							"key": "token",
+							"value": "{{token}}"
+						},
+						{
+							"key": "name",
+							"value": "{{boardUpdateTitle}}"
+						},
+						{
+							"key": "desc",
+							"value": "{{boardUpdateDesc}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[DELETE] Delete a board",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Answer code veryfication - 200\", function(){\r",
+							"    pm.response.to.have.status(200)\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/boards/{{boardID}}?key={{key}}&token={{token}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"boards",
+						"{{boardID}}"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{key}}"
+						},
+						{
+							"key": "token",
+							"value": "{{token}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BoardTitle",
+			"value": "Test Board 2",
+			"type": "string"
+		},
+		{
+			"key": "boardID",
+			"value": ""
+		},
+		{
+			"key": "boardUpdateTitle",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "boardUpdateDesc",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
